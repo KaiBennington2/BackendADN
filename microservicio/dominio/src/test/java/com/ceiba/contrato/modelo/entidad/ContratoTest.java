@@ -22,6 +22,7 @@ class ContratoTest {
     private Contrato contrato;
 
     @Test
+    @DisplayName("Deberia crear contrato de manera correcta")
     void crearContratoCorrectamente() {
         // arrange
         BigDecimal trmAplicada = new BigDecimal("3702.86");

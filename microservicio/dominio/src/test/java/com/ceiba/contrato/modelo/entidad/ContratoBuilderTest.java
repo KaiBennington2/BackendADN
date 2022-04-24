@@ -2,6 +2,7 @@ package com.ceiba.contrato.modelo.entidad;
 
 import com.ceiba.contrato.builders.ContratoTestDataBuilder;
 import com.ceiba.contrato.modelo.enums.PaquetesContratos;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -16,7 +17,8 @@ class ContratoBuilderTest {
     private Contrato contratoBuilder;
 
     @Test
-    void crearContratoCorrectamente() {
+    @DisplayName("Deberia crear contrato builder de manera correcta")
+    void crearContratoBuilderCorrectamente() {
         // arrange
         contratoBase = new ContratoTestDataBuilder().conId(1L).build();
         contratoBuilder = new ContratoBuilder(contratoBase).setCreatedDate(LocalDateTime.now()).build();

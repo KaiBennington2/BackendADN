@@ -4,6 +4,7 @@ import com.ceiba.ApplicationMock;
 import com.ceiba.cliente.builders.ComandoClienteTestDataBuilder;
 import com.ceiba.cliente.comando.dto.ComandoCliente;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ class ComandoControladorClienteTest {
     private ComandoCliente comandoCliente;
 
     @Test
+    @DisplayName("Deberia integrar: crear cliente de manera correcta")
     void create() throws Exception {
         // arrange
         comandoCliente = new ComandoClienteTestDataBuilder().build();

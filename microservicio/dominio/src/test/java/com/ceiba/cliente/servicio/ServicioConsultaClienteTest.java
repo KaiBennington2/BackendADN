@@ -3,6 +3,7 @@ package com.ceiba.cliente.servicio;
 import com.ceiba.cliente.builders.ClienteTestDataBuilder;
 import com.ceiba.cliente.modelo.entidad.Cliente;
 import com.ceiba.cliente.puerto.dao.DaoCliente;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -16,6 +17,7 @@ class ServicioConsultaClienteTest {
     private DaoCliente daoCliente;
 
     @Test
+    @DisplayName("Deberia devolver TRUE por existencia de cliente")
     void existsByNit() {
         // arrange
         cliente = new ClienteTestDataBuilder().build();

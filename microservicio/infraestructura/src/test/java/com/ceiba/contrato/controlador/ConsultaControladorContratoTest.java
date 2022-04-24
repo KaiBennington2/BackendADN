@@ -3,6 +3,7 @@ package com.ceiba.contrato.controlador;
 import com.ceiba.ApplicationMock;
 import com.ceiba.contrato.modelo.enums.PaquetesContratos;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ class ConsultaControladorContratoTest {
     }
 
     @Test
+    @DisplayName("Deberia integrar: listar todos los contratos de manera correcta")
     void listarTodos() throws Exception {
 
         //arrange - act - assert
@@ -56,6 +58,7 @@ class ConsultaControladorContratoTest {
     }
 
     @Test
+    @DisplayName("Deberia integrar: listr contrato por id de manera correcta")
     void listarPorId() throws Exception {
 
         // arrange
@@ -77,6 +80,7 @@ class ConsultaControladorContratoTest {
     }
 
     @Test
+    @DisplayName("Deberia integrar: listar contrato por nit [RequestParam] de manera correcta")
     void listarPorNitRequestParam() throws Exception {
 
         LocalDate fechaCorte = LocalDate.of(2022, 6, 9);
@@ -96,6 +100,7 @@ class ConsultaControladorContratoTest {
     }
 
     @Test
+    @DisplayName("Deberia integrar: obtener el detalle del contrato de manera correcta")
     void obtenerDetallContratoExistenteRequestParam() throws Exception {
 
         // arrange

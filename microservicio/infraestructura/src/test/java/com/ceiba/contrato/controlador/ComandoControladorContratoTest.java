@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ class ComandoControladorContratoTest {
     }
 
     @Test
+    @DisplayName("Deberia integrar: crear contratos de manera correcta")
     void crear() throws Exception {
         // arrange
         contrato = new ComandoContratoTestDataBuilder().build();
@@ -53,7 +55,8 @@ class ComandoControladorContratoTest {
     }
 
     @Test
-    void crearSinFechaInstalacionDaException() throws Exception {
+    @DisplayName("Deberia dar excepcion al intentar crear sin campo fecha instalacion obligatorio.")
+    void intentarCrearSinFechaInstalacionDaException() throws Exception {
         // arrange
         contrato = new ComandoContratoTestDataBuilder().conFechaInstalacion(null).build();
         // - act - assert
