@@ -14,10 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ComandoControladorCliente.class)
@@ -43,7 +43,36 @@ class ComandoControladorClienteTest {
                         .content(objectMapper.writeValueAsString(comandoCliente)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{'valor': 5}"));
+                .andExpect(content().json("{'valor': 6}"));
+    }
+
+    @Test
+    @DisplayName("Deberia integrar: actualizar cliente de manera correcta")
+    void update() throws Exception {
+        // arrange
+        comandoCliente = new ComandoClienteTestDataBuilder().conId(1L).conNit("1234567").build();
+        // act - assert
+        mockMvc.perform(put("/clientes/{id}",comandoCliente.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(comandoCliente)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Deberia integrar: eliminar un cliente de manera correcta")
+    void deletee() throws Exception {
+        // arrange
+        comandoCliente = new ComandoClienteTestDataBuilder().conId(5L).conNit("123465").build();
+        // act - assert
+        mockMvc.perform(delete("/clientes/{id}", comandoCliente.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/clientes")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(5)));
     }
 
 }

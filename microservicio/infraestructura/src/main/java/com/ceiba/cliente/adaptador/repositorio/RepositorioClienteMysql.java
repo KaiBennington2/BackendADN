@@ -1,5 +1,7 @@
 package com.ceiba.cliente.adaptador.repositorio;
 
+import com.ceiba.cliente.adaptador.mapper.MapeoCliente;
+import com.ceiba.cliente.modelo.dto.DtoCliente;
 import com.ceiba.cliente.modelo.entidad.Cliente;
 import com.ceiba.cliente.puerto.repositories.RepositorioCliente;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
@@ -20,11 +22,17 @@ public class RepositorioClienteMysql implements RepositorioCliente {
     @SqlStatement(namespace = SQL_NAMESPACE, value = "update")
     private static String sqlUpdate;
 
+    @SqlStatement(namespace = SQL_NAMESPACE, value = "delete")
+    private static String sqlDelete;
+
     @SqlStatement(namespace = SQL_NAMESPACE, value = "existsById")
     private static String sqlExistsById;
 
     @SqlStatement(namespace = SQL_NAMESPACE, value = "existsByNit")
     private static String sqlExistsByNit;
+
+    @SqlStatement(namespace = SQL_NAMESPACE, value = "findById")
+    private static String sqlFindById;
 
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
@@ -43,10 +51,24 @@ public class RepositorioClienteMysql implements RepositorioCliente {
     }
 
     @Override
+    public void delete(Long id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(ID, id);
+        this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlDelete,params);
+    }
+
+    @Override
     public boolean existsById(Long id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(ID, id);
         return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsById, params, Boolean.class);
+    }
+
+    @Override
+    public DtoCliente findById(Long id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(ID, id);
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindById, params, new MapeoCliente());
     }
 
     @Override

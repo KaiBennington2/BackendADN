@@ -19,6 +19,11 @@ public class ComandoClienteTestDataBuilder {
         direccion = "Cll 000 # 00 - 00";
     }
 
+    public ComandoClienteTestDataBuilder conId(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public ComandoClienteTestDataBuilder conNit(String nit) {
         this.nitCliente = nit;
         return this;

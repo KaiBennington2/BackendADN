@@ -29,6 +29,9 @@ public class DaoContratoMysql implements DaoContrato {
     @SqlStatement(namespace = SQL_NAMESPACE, value = "existsById")
     private static String sqlExistsById;
 
+    @SqlStatement(namespace = SQL_NAMESPACE, value = "existsByNit")
+    private static String sqlExistsByNit;
+
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
     public DaoContratoMysql(CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate) {
@@ -60,6 +63,13 @@ public class DaoContratoMysql implements DaoContrato {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue(ID, id);
         return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsById, paramSource, Boolean.class);
+    }
+
+    @Override
+    public Boolean existsByNit(String nit) {
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue(NIT, nit);
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsByNit, paramSource, Boolean.class);
     }
 
 }

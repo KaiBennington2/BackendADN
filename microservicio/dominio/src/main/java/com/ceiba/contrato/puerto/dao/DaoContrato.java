@@ -8,6 +8,8 @@ public interface DaoContrato {
 
     Boolean existsById(Long id);
 
+    Boolean existsByNit(String nit);
+
     List<DtoContrato> findAll();
 
     DtoContrato findById(Long id);

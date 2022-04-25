@@ -37,7 +37,7 @@ class ConsultaControladorClienteTest {
         mockMvc.perform(get("/clientes")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(4)))
+                .andExpect(jsonPath("$", hasSize(5)))
                 .andExpect(jsonPath("$[0].nitCustomer", is("1234567")))
                 .andExpect(jsonPath("$[0].companyName", is("Pruebas S.A.S.")))
                 .andExpect(jsonPath("$[0].representantName", is("Kai Bennington")))

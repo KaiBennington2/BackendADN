@@ -5,6 +5,8 @@ import com.ceiba.cliente.puerto.repositories.RepositorioCliente;
 import com.ceiba.cliente.servicio.ServicioActualizarCliente;
 import com.ceiba.cliente.servicio.ServicioConsultaCliente;
 import com.ceiba.cliente.servicio.ServicioCrearCliente;
+import com.ceiba.cliente.servicio.ServicioEliminarCliente;
+import com.ceiba.contrato.servicio.ServicioConsultaContrato;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +21,11 @@ public class BeanServiciosCliente {
     @Bean
     public ServicioActualizarCliente customerUpdateService(RepositorioCliente repositorioCliente) {
         return new ServicioActualizarCliente(repositorioCliente);
+    }
+
+    @Bean
+    public ServicioEliminarCliente customerDeleteService(RepositorioCliente repositorioCliente,ServicioConsultaContrato servicioConsultaContrato) {
+        return new ServicioEliminarCliente(repositorioCliente, servicioConsultaContrato);
     }
 
     @Bean

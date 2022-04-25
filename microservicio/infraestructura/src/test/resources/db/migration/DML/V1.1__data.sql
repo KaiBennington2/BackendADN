@@ -14,6 +14,9 @@ VALUES (3,'1029384','Empresa S.A.S.','Cliente Prueba','3023013065','Cll 222 # 13
 INSERT INTO clientes(id, nit, razon_social, nombre_representante, telefono, direccion)
 VALUES (4,'1234','cliente base S.A.S.','Cliente Base','1234567890','Cll 000 # 00 - 00');
 
+INSERT INTO clientes(id, nit, razon_social, nombre_representante, telefono, direccion)
+VALUES (5,'123465','base S.A.S.','Base','000567890','Cll 444 # 40 - 50');
+
 --CONTRATOS
 INSERT INTO contratos(id, nit_cliente, duracion_contrato_meses, tipo_moneda, trm_aplicada, paquete, fecha_instalacion, fecha_corte)
 VALUES (1,'1234567',24,'USD','3702.86','PREMIUM',now(),'2022-05-12');

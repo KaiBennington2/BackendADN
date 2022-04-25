@@ -6,6 +6,7 @@ import com.ceiba.contrato.modelo.entidad.ContratoBuilder;
 import com.ceiba.contrato.modelo.enums.PaquetesContratos;
 import com.ceiba.contrato.puerto.repositorio.RepositorioContrato;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
+import com.ceiba.dominio.excepcion.ExcepcionSinDatos;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -55,7 +56,7 @@ public class ServicioCrearContrato {
 
     private void validarExistenciaCliente(Contrato contrato) {
         boolean existe = this.servicioConsultaCliente.existsByNit(contrato.getNitCustomer());
-        if (!existe) throw new ExcepcionDuplicidad(String.format(CLIENTE_NO_EXISTENTE, contrato.getNitCustomer()));
+        if (!existe) throw new ExcepcionSinDatos(String.format(CLIENTE_NO_EXISTENTE, contrato.getNitCustomer()));
     }
 
     private void obtenerPaqueteContrato(Contrato contrato) {

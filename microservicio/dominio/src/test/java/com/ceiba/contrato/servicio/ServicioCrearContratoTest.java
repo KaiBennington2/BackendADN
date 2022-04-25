@@ -6,6 +6,7 @@ import com.ceiba.contrato.builders.ContratoTestDataBuilder;
 import com.ceiba.contrato.modelo.entidad.Contrato;
 import com.ceiba.contrato.puerto.repositorio.RepositorioContrato;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
+import com.ceiba.dominio.excepcion.ExcepcionSinDatos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -99,7 +100,7 @@ class ServicioCrearContratoTest {
         when(servicioConsultaCliente.existsByNit(anyString())).thenReturn(false);
         // act - assert
         BasePrueba.assertThrows(() -> servicioCrearContrato.execute(contrato),
-                ExcepcionDuplicidad.class,
+                ExcepcionSinDatos.class,
                 String.format(CLIENTE_NO_EXISTENTE, contrato.getNitCustomer()));
     }
 }
