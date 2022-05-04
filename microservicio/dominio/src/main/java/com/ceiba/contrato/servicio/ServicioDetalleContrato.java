@@ -31,26 +31,26 @@ public class ServicioDetalleContrato {
 
     private DtoContratoDetalle crearDtoContratoDetalle(DtoContrato dtoContrato) {
 
-        Integer anno = dtoContrato.getInstallDate().getYear();
+        Integer anno = dtoContrato.getFechaInstalacion().getYear();
         SalariosMinimosAnnos salario = SalariosMinimosAnnos.getByYear(anno);
-        PaquetesContratos paquete = PaquetesContratos.getByName(dtoContrato.getPacket());
+        PaquetesContratos paquete = PaquetesContratos.getByName(dtoContrato.getPaquete());
         BigDecimal valorBase = salario.getSmmlv();
         BigDecimal valorPorcentajeAplicado = valorBase.multiply(paquete.getBasePorcentage()).divide(new BigDecimal(100), BigDecimal.ROUND_HALF_EVEN);
         BigDecimal valorContrato = valorBase.add(valorPorcentajeAplicado);
 
-        if ("USD".equalsIgnoreCase(dtoContrato.getCoinType())) {
-            valorContrato = valorContrato.divide(dtoContrato.getTrmApplied(), BigDecimal.ROUND_HALF_EVEN);
+        if ("USD".equalsIgnoreCase(dtoContrato.getTipoMoneda())) {
+            valorContrato = valorContrato.divide(dtoContrato.getTrmAplicada(), BigDecimal.ROUND_HALF_EVEN);
         }
         return new DtoContratoDetalle(
                 dtoContrato.getId(),
-                dtoContrato.getNitCustomer(),
-                dtoContrato.getContractTime(),
-                dtoContrato.getCoinType(),
-                dtoContrato.getTrmApplied(),
-                dtoContrato.getPacket(),
-                dtoContrato.getInstallDate(),
-                dtoContrato.getCutOffDate(),
-                dtoContrato.getCutOffBeforeDate(),
+                dtoContrato.getNitCliente(),
+                dtoContrato.getTiempoContratoMeses(),
+                dtoContrato.getTipoMoneda(),
+                dtoContrato.getTrmAplicada(),
+                dtoContrato.getPaquete(),
+                dtoContrato.getFechaInstalacion(),
+                dtoContrato.getFechaCorte(),
+                dtoContrato.getFechaCorteAnterior(),
                 valorContrato
         );
     }

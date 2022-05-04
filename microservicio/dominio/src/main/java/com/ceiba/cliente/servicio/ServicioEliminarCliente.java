@@ -28,7 +28,7 @@ public class ServicioEliminarCliente {
     }
 
     private void validarContratosRelacionados(DtoCliente dtoCliente) {
-        boolean existe = this.servicioConsultaContrato.existsByNit(dtoCliente.getNitCustomer());
+        boolean existe = this.servicioConsultaContrato.existsByNit(dtoCliente.getNitCliente());
         if (existe) throw new ExcepcionDuplicidad(TIENE_CONTRATOS_RELACIONADOS);
     }
 }

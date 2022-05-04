@@ -6,7 +6,11 @@ public interface RepositorioContrato {
 
     Long crear(Contrato contrato);
 
+    void delete(Long id);
+
     Boolean existsByNit(String nit);
+
+    Boolean existsById(Long id);
 
 
 }

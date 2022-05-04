@@ -8,9 +8,9 @@ import lombok.Getter;
 public class DtoCliente {
 
     private Long id;
-    private String nitCustomer;
-    private String companyName;
-    private String representantName;
-    private String phone;
-    private String adress;
+    private String nitCliente;
+    private String razonSocial;
+    private String nombreRepresentante;
+    private String telefono;
+    private String direccion;
 }

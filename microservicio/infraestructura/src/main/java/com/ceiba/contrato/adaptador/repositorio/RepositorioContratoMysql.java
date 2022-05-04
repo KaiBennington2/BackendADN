@@ -11,10 +11,18 @@ import org.springframework.stereotype.Repository;
 public class RepositorioContratoMysql implements RepositorioContrato {
 
     private static final String SQL_NAMESPACE = "contrato";
+    private static final String ID = "id";
     private static final String NIT = "nit";
+
 
     @SqlStatement(namespace = SQL_NAMESPACE, value = "create")
     private static String sqlCreate;
+
+    @SqlStatement(namespace = SQL_NAMESPACE, value = "delete")
+    private static String sqlDelete;
+
+    @SqlStatement(namespace = SQL_NAMESPACE, value = "existsById")
+    private static String sqlExistsById;
 
     @SqlStatement(namespace = SQL_NAMESPACE, value = "existsByNit")
     private static String sqlExistsByNit;
@@ -31,10 +39,24 @@ public class RepositorioContratoMysql implements RepositorioContrato {
     }
 
     @Override
+    public void delete(Long id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(ID, id);
+        this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlDelete,params);
+    }
+
+    @Override
     public Boolean existsByNit(String nit) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue(NIT, nit);
         return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsByNit, paramSource, Boolean.class);
+    }
+
+    @Override
+    public Boolean existsById(Long id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(ID, id);
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsById, params, Boolean.class);
     }
 
 }

@@ -38,7 +38,7 @@ class ServicioDetalleContratoTest {
         // act
         DtoContratoDetalle dtoContratoDetalle = servicioDetalleContrato.ejecutar(dtoContrato.getId());
         // assert
-        assertEquals(new BigDecimal(338), dtoContratoDetalle.getContractValue());
+        assertEquals(new BigDecimal(338), dtoContratoDetalle.getValorContrato());
     }
 
     @Test
