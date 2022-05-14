@@ -20,7 +20,7 @@ public class ServicioCrearCliente {
     }
 
     private void validarExistenciaPrevia(Cliente cliente) {
-        if (customerRepository.existsByNit(cliente.getNitCustomer())) {
+        if (customerRepository.existsByNit(cliente.getNit())) {
             throw new ExcepcionDuplicidad(EXISTS);
         }
     }

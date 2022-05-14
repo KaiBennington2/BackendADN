@@ -18,7 +18,7 @@ public class ComandoContrato {
     private String nitCliente;
     private String tipoMoneda;
     private BigDecimal trmAplicada;
-    private String paquete;
+    private String paqueteContrato;
     private LocalDate fechaInstalacion;
 
 }

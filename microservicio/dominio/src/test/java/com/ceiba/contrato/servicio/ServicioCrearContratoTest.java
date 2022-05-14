@@ -89,7 +89,7 @@ class ServicioCrearContratoTest {
         BasePrueba.assertThrows(() -> servicioCrearContrato.execute(contrato),
                 ExcepcionDuplicidad.class,
                 String.format("Para el cliente [%s], ya existe un contrato en el sistema.",
-                        contrato.getNitCustomer()));
+                        contrato.getCliente().getNit()));
     }
 
     @Test
@@ -101,6 +101,6 @@ class ServicioCrearContratoTest {
         // act - assert
         BasePrueba.assertThrows(() -> servicioCrearContrato.execute(contrato),
                 ExcepcionSinDatos.class,
-                String.format(CLIENTE_NO_EXISTENTE, contrato.getNitCustomer()));
+                String.format(CLIENTE_NO_EXISTENTE, contrato.getCliente().getNit()));
     }
 }

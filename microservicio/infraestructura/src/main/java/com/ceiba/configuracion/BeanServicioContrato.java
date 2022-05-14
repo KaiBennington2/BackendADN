@@ -19,7 +19,7 @@ public class BeanServicioContrato {
     }
 
     @Bean
-    public ServicioEliminarContrato customerDeleteService(RepositorioContrato repositorioContrato) {
+    public ServicioEliminarContrato contractDeleteService(RepositorioContrato repositorioContrato) {
         return new ServicioEliminarContrato(repositorioContrato);
     }
 

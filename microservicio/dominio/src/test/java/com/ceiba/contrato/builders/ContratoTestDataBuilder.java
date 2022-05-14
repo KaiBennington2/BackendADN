@@ -1,6 +1,9 @@
 package com.ceiba.contrato.builders;
 
+import com.ceiba.cliente.builders.ClienteTestDataBuilder;
+import com.ceiba.cliente.modelo.entidad.Cliente;
 import com.ceiba.contrato.modelo.entidad.Contrato;
+import com.ceiba.contrato.modelo.enums.PaquetesContratos;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,18 +11,18 @@ import java.time.LocalDate;
 public class ContratoTestDataBuilder {
 
     private Long id;
-    private String nitCustomer;
-    private String coinType;
-    private BigDecimal trmApplied;
-    private String packet;
-    private LocalDate installDate;
+    private Cliente cliente;
+    private String tipoMoneda;
+    private BigDecimal trmAplicada;
+    private PaquetesContratos paquetesContrato;
+    private LocalDate fechaInstalacion;
 
     public ContratoTestDataBuilder() {
-        nitCustomer = "1234567";
-        coinType = "COP";
-        trmApplied = new BigDecimal("3702.86");
-        packet = "BASIC";
-        installDate = LocalDate.now();
+        cliente = new ClienteTestDataBuilder().conId(1L).build();
+        tipoMoneda = "COP";
+        trmAplicada = new BigDecimal("3702.86");
+        paquetesContrato = PaquetesContratos.getByName("BASICO");
+        fechaInstalacion = LocalDate.now();
 
     }
 
@@ -28,39 +31,39 @@ public class ContratoTestDataBuilder {
         return this;
     }
 
-    public ContratoTestDataBuilder conNit(String nitCliente) {
-        this.nitCustomer = nitCliente;
+    public ContratoTestDataBuilder conCliente(Cliente cliente) {
+        this.cliente = cliente;
         return this;
     }
 
     public ContratoTestDataBuilder conTipoMoneda(String tipoMoneda) {
-        this.coinType = tipoMoneda;
+        this.tipoMoneda = tipoMoneda;
         return this;
     }
 
     public ContratoTestDataBuilder conTrmAplicada(BigDecimal trmAplicada) {
-        this.trmApplied = trmAplicada;
+        this.trmAplicada = trmAplicada;
         return this;
     }
 
-    public ContratoTestDataBuilder conPaquete(String paquete) {
-        this.packet = paquete;
+    public ContratoTestDataBuilder conPaquete(String paquetesContrato) {
+        this.paquetesContrato = PaquetesContratos.getByName(paquetesContrato);
         return this;
     }
 
     public ContratoTestDataBuilder conFechaInstalacion(LocalDate fechaInstalacion) {
-        this.installDate = fechaInstalacion;
+        this.fechaInstalacion = fechaInstalacion;
         return this;
     }
 
     public Contrato build() {
         return new Contrato(
                 id,
-                nitCustomer,
-                coinType,
-                trmApplied,
-                packet,
-                installDate);
+                cliente,
+                tipoMoneda,
+                trmAplicada,
+                paquetesContrato,
+                fechaInstalacion);
     }
 
 }

@@ -34,8 +34,8 @@ public class ServicioDetalleContrato {
         Integer anno = dtoContrato.getFechaInstalacion().getYear();
         SalariosMinimosAnnos salario = SalariosMinimosAnnos.getByYear(anno);
         PaquetesContratos paquete = PaquetesContratos.getByName(dtoContrato.getPaquete());
-        BigDecimal valorBase = salario.getSmmlv();
-        BigDecimal valorPorcentajeAplicado = valorBase.multiply(paquete.getBasePorcentage()).divide(new BigDecimal(100), BigDecimal.ROUND_HALF_EVEN);
+        BigDecimal valorBase = salario.getSalarioMinimo();
+        BigDecimal valorPorcentajeAplicado = valorBase.multiply(paquete.getPorcentajeBaseAplicado()).divide(new BigDecimal(100), BigDecimal.ROUND_HALF_EVEN);
         BigDecimal valorContrato = valorBase.add(valorPorcentajeAplicado);
 
         if ("USD".equalsIgnoreCase(dtoContrato.getTipoMoneda())) {

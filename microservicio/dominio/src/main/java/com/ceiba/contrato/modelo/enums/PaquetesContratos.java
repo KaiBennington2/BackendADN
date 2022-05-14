@@ -8,28 +8,32 @@ import java.math.BigDecimal;
 @Getter
 public enum PaquetesContratos {
 
-
-    BASIC("BASIC", 30, 48, new BigDecimal(75)),
-    COMPACT("COMPACT", 60, 36, new BigDecimal(50)),
+    BASICO("BASIC", 30, 48, new BigDecimal(75)),
+    COMPACTO("COMPACT", 60, 36, new BigDecimal(50)),
     PREMIUM("PREMIUM", 90, 24, new BigDecimal(25));
 
     private static final String PAQUETE_CONTRATO_INVALIDO = "El paquete de contrato es inválido.";
 
-    private final String name;
-    private final Integer frequencyDayPayment;
-    private final Integer minPacketTime;
-    private final BigDecimal basePorcentage;
+    private final String nombre;
+    private final Integer frecuenciaPagoEnDias;
+    private final Integer tiempoPaqueteEnMeses;
+    private final BigDecimal porcentajeBaseAplicado;
 
-    private PaquetesContratos(String name, Integer frequencyDayPayment, Integer minPacketTime, BigDecimal basePorcentage) {
-        this.name = name;
-        this.frequencyDayPayment = frequencyDayPayment;
-        this.minPacketTime = minPacketTime;
-        this.basePorcentage = basePorcentage;
+    private PaquetesContratos(
+            String nombre,
+            Integer frecuenciaPagoEnDias,
+            Integer tiempoPaqueteEnMeses,
+            BigDecimal porcentajeBaseAplicado
+    ) {
+        this.nombre = nombre;
+        this.frecuenciaPagoEnDias = frecuenciaPagoEnDias;
+        this.tiempoPaqueteEnMeses = tiempoPaqueteEnMeses;
+        this.porcentajeBaseAplicado = porcentajeBaseAplicado;
     }
 
-    public static PaquetesContratos getByName(String packet) {
+    public static PaquetesContratos getByName(String paqueteContrato) {
         try {
-            return PaquetesContratos.valueOf(packet.toUpperCase());
+            return PaquetesContratos.valueOf(paqueteContrato.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new ExcepcionValorInvalido(PAQUETE_CONTRATO_INVALIDO);
         }

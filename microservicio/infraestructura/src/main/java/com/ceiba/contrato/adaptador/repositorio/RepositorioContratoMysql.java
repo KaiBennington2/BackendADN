@@ -2,8 +2,10 @@ package com.ceiba.contrato.adaptador.repositorio;
 
 import com.ceiba.contrato.modelo.entidad.Contrato;
 import com.ceiba.contrato.puerto.repositorio.RepositorioContrato;
+import com.ceiba.infraestructura.excepcion.ExcepcionTecnica;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,7 @@ public class RepositorioContratoMysql implements RepositorioContrato {
     private static final String SQL_NAMESPACE = "contrato";
     private static final String ID = "id";
     private static final String NIT = "nit";
+    private static final String ERROR_AL_GUARDAR = "Ocurrio un Error al tratar de guardar el contrato";
 
 
     @SqlStatement(namespace = SQL_NAMESPACE, value = "create")
@@ -35,7 +38,12 @@ public class RepositorioContratoMysql implements RepositorioContrato {
 
     @Override
     public Long crear(Contrato contrato) {
-        return customNamedParameterJdbcTemplate.crear(contrato, sqlCreate);
+        try {
+            return customNamedParameterJdbcTemplate.crear(contrato, sqlCreate);
+        }catch(DataAccessException e) {
+            throw new ExcepcionTecnica(ERROR_AL_GUARDAR,e);
+        }
+
     }
 
     @Override

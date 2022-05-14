@@ -78,11 +78,11 @@ class ServicioEliminarClienteTest {
     DtoCliente mapperClienteToDtoCliente(Cliente cliente) {
         return new DtoCliente(
                 cliente.getId(),
-                cliente.getNitCustomer(),
-                cliente.getCompanyName(),
-                cliente.getRepresentantName(),
-                cliente.getPhone(),
-                cliente.getAdress());
+                cliente.getNit(),
+                cliente.getRazonSocial(),
+                cliente.getNombreRepresentante(),
+                cliente.getTelefono(),
+                cliente.getDireccion());
     }
 
 }

@@ -52,7 +52,7 @@ class ConsultaControladorContratoTest {
                 .andExpect(jsonPath("$[0].contractTime", is(24)))
                 .andExpect(jsonPath("$[0].coinType", is("USD")))
                 .andExpect(jsonPath("$[0].trmApplied", is(3702.86)))
-                .andExpect(jsonPath("$[0].packet", is(PaquetesContratos.PREMIUM.getName())))
+                .andExpect(jsonPath("$[0].packet", is(PaquetesContratos.PREMIUM.getNombre())))
                 .andExpect(jsonPath("$[0].installDate", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
                 .andExpect(jsonPath("$[0].cutOffDate", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))));
     }
@@ -117,7 +117,7 @@ class ConsultaControladorContratoTest {
                 .andExpect(jsonPath("$.contractTime", is(24)))
                 .andExpect(jsonPath("$.coinType", is("USD")))
                 .andExpect(jsonPath("$.trmApplied", is(3702.86)))
-                .andExpect(jsonPath("$.packet", is(PaquetesContratos.PREMIUM.getName())))
+                .andExpect(jsonPath("$.packet", is(PaquetesContratos.PREMIUM.getNombre())))
                 .andExpect(jsonPath("$.installDate", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
                 .andExpect(jsonPath("$.cutOffDate", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))))
                 .andExpect(jsonPath("$.contractValue", is(338)));

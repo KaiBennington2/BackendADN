@@ -29,11 +29,11 @@ class ClienteTest {
         Cliente cliente = new ClienteTestDataBuilder().conId(1L).build();
         //assert
         assertEquals(1, cliente.getId());
-        assertEquals("0000001", cliente.getNitCustomer());
-        assertEquals("Empresa Prueba S.A.S.", cliente.getCompanyName());
-        assertEquals("Usuario Prueba", cliente.getRepresentantName());
-        assertEquals("1234567890", cliente.getPhone());
-        assertEquals("Cll 000 # 00 - 00", cliente.getAdress());
+        assertEquals("0000001", cliente.getNit());
+        assertEquals("Empresa Prueba S.A.S.", cliente.getRazonSocial());
+        assertEquals("Usuario Prueba", cliente.getNombreRepresentante());
+        assertEquals("1234567890", cliente.getTelefono());
+        assertEquals("Cll 000 # 00 - 00", cliente.getDireccion());
         assertEquals(toString, cliente.toString());
     }
 

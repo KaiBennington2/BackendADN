@@ -23,9 +23,9 @@ class ServicioConsultaContratoTest {
         contrato = new ContratoTestDataBuilder().build();
         daoContrato = Mockito.mock(DaoContrato.class);
         servicioConsultaContrato = new ServicioConsultaContrato(daoContrato);
-        when(daoContrato.existsByNit(contrato.getNitCustomer())).thenReturn(Boolean.TRUE);
+        when(daoContrato.existsByNit(contrato.getCliente().getNit())).thenReturn(Boolean.TRUE);
         // act
-        Boolean expected = servicioConsultaContrato.existsByNit(contrato.getNitCustomer());
+        Boolean expected = servicioConsultaContrato.existsByNit(contrato.getCliente().getNit());
         // assert
         assertEquals(Boolean.TRUE, expected);
     }

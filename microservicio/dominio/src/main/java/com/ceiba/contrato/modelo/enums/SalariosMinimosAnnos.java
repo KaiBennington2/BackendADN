@@ -9,18 +9,18 @@ import java.math.BigDecimal;
 public enum SalariosMinimosAnnos {
 
     ANNO2020(2020, new BigDecimal(800000)),
-    ANNO2021(22021, new BigDecimal(900000)),
+    ANNO2021(2021, new BigDecimal(900000)),
     ANNO2022(2022, new BigDecimal(1000000));
 
     private static final String PREFIJO_ENUM_SALARIOS_MINIMOS_ANNOS = "ANNO";
-    private static final String ANNO_SALARIO_MINIMO_INVALIDO = "El Salario minimo de ese año no fue encontrado.";
+    private static final String ANNO_SALARIO_MINIMO_INVALIDO = "El Salario mínimo de ese año no fue encontrado.";
 
-    private final Integer year;
-    private final BigDecimal smmlv;
+    private final Integer anno;
+    private final BigDecimal salarioMinimo;
 
-    private SalariosMinimosAnnos(Integer year, BigDecimal smmlv) {
-        this.year = year;
-        this.smmlv = smmlv;
+    private SalariosMinimosAnnos(Integer anno, BigDecimal salarioMinimo) {
+        this.anno = anno;
+        this.salarioMinimo = salarioMinimo;
     }
 
     public static SalariosMinimosAnnos getByYear(Integer anno) {

@@ -3,8 +3,10 @@ package com.ceiba.cliente.adaptador.dao;
 import com.ceiba.cliente.adaptador.mapper.MapeoCliente;
 import com.ceiba.cliente.modelo.dto.DtoCliente;
 import com.ceiba.cliente.puerto.dao.DaoCliente;
+import com.ceiba.infraestructura.excepcion.ExcepcionTecnica;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Component
 public class DaoClienteMysqlCliente implements DaoCliente {
+
+    private static final String ERROR_AL_ENCONTRAR = "Cliente no encontrado.";
 
     private static final String SQL_NAMESPACE = "cliente";
     private static final String ID = "id";
@@ -57,9 +61,13 @@ public class DaoClienteMysqlCliente implements DaoCliente {
 
     @Override
     public DtoCliente findByNit(String nit) {
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue(NIT, nit);
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindByNit, params, new MapeoCliente());
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue(NIT, nit);
+            return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindByNit, params, new MapeoCliente());
+        }catch (DataAccessException e){
+            throw new ExcepcionTecnica(ERROR_AL_ENCONTRAR, e);
+        }
     }
 
 }
