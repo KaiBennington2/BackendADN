@@ -1,6 +1,5 @@
 package com.ceiba.configuracion;
 
-import com.ceiba.cliente.servicio.ServicioConsultaCliente;
 import com.ceiba.contrato.puerto.dao.DaoContrato;
 import com.ceiba.contrato.puerto.repositorio.RepositorioContrato;
 import com.ceiba.contrato.servicio.ServicioConsultaContrato;
@@ -14,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 public class BeanServicioContrato {
 
     @Bean
-    public ServicioCrearContrato contractCreateService(RepositorioContrato repositorioContrato, ServicioConsultaCliente servicioConsultaCliente) {
-        return new ServicioCrearContrato(repositorioContrato, servicioConsultaCliente);
+    public ServicioCrearContrato contractCreateService(RepositorioContrato repositorioContrato) {
+        return new ServicioCrearContrato(repositorioContrato);
     }
 
     @Bean

@@ -15,7 +15,7 @@ public class ServicioEliminarContrato {
     }
 
     public void ejecutar(Long id) {
-        if (!repositorioContrato.existsById(id)) throw new ExcepcionSinDatos(NOT_EXISTS);
+        if (!repositorioContrato.existsById(id)) { throw new ExcepcionSinDatos(NOT_EXISTS); }
         repositorioContrato.delete(id);
     }
 }

@@ -9,13 +9,16 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Repository
 public class RepositorioContratoMysql implements RepositorioContrato {
 
     private static final String SQL_NAMESPACE = "contrato";
     private static final String ID = "id";
     private static final String NIT = "nit";
-    private static final String ERROR_AL_GUARDAR = "Ocurrio un Error al tratar de guardar el contrato";
+    private static final String ERROR_AL_GUARDAR = "Ocurrió un Error al tratar de guardar el contrato";
 
 
     @SqlStatement(namespace = SQL_NAMESPACE, value = "create")
@@ -39,11 +42,14 @@ public class RepositorioContratoMysql implements RepositorioContrato {
     @Override
     public Long crear(Contrato contrato) {
         try {
-            return customNamedParameterJdbcTemplate.crear(contrato, sqlCreate);
+            Map params = new HashMap();
+            params.put("cliente.nit", contrato.getCliente().getNit());
+            params.put("paquete.nombre", contrato.getPaqueteContrato().getNombre());
+            return customNamedParameterJdbcTemplate.crearParametrosExtras(contrato, sqlCreate,params);
         }catch(DataAccessException e) {
+            System.out.println(e.getMessage());
             throw new ExcepcionTecnica(ERROR_AL_GUARDAR,e);
         }
-
     }
 
     @Override

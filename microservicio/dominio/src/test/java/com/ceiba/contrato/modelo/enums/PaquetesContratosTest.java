@@ -36,7 +36,7 @@ class PaquetesContratosTest {
     void deberiaDevolverNombrePaqueteSeleccionado() {
         // arrange
         String nombrePaqueteContrato = "Basico";
-        String nombreEsperado = "BASIC";
+        String nombreEsperado = "BASICO";
         // act - assert
         assertEquals(nombreEsperado, PaquetesContratos.getByName(nombrePaqueteContrato).getNombre());
     }

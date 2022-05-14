@@ -18,7 +18,7 @@ public class ComandoContratoTestDataBuilder {
         nitCliente = "1234";
         tipoMoneda = "USD";
         trmAplicada = new BigDecimal("3702.86");
-        paquete = "BASIC";
+        paquete = "BASICO";
         fechaInstalacion = LocalDate.now();
 
     }

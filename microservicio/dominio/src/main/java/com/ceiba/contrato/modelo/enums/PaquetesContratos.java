@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 @Getter
 public enum PaquetesContratos {
 
-    BASICO("BASIC", 30, 48, new BigDecimal(75)),
-    COMPACTO("COMPACT", 60, 36, new BigDecimal(50)),
+    BASICO("BASICO", 30, 48, new BigDecimal(75)),
+    COMPACTO("COMPACTO", 60, 36, new BigDecimal(50)),
     PREMIUM("PREMIUM", 90, 24, new BigDecimal(25));
 
     private static final String PAQUETE_CONTRATO_INVALIDO = "El paquete de contrato es inválido.";

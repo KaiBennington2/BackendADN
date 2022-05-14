@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 public class ServicioDetalleContrato {
 
-    private static final String NO_EXISTE_EL_CONTRATO = "No se encontraron datos en el sistema.";
+    private static final String NO_EXISTE_EL_CONTRATO = "El contrato no existe en el sistema.";
 
     private final DaoContrato daoContrato;
 
@@ -26,14 +26,14 @@ public class ServicioDetalleContrato {
 
     private void validarExistenciaPrevia(Long id) {
         boolean existe = this.daoContrato.existsById(id);
-        if (!existe) throw new ExcepcionSinDatos(NO_EXISTE_EL_CONTRATO);
+        if (!existe) { throw new ExcepcionSinDatos(NO_EXISTE_EL_CONTRATO); }
     }
 
     private DtoContratoDetalle crearDtoContratoDetalle(DtoContrato dtoContrato) {
 
         Integer anno = dtoContrato.getFechaInstalacion().getYear();
         SalariosMinimosAnnos salario = SalariosMinimosAnnos.getByYear(anno);
-        PaquetesContratos paquete = PaquetesContratos.getByName(dtoContrato.getPaquete());
+        PaquetesContratos paquete = PaquetesContratos.getByName(dtoContrato.getPaqueteContrato());
         BigDecimal valorBase = salario.getSalarioMinimo();
         BigDecimal valorPorcentajeAplicado = valorBase.multiply(paquete.getPorcentajeBaseAplicado()).divide(new BigDecimal(100), BigDecimal.ROUND_HALF_EVEN);
         BigDecimal valorContrato = valorBase.add(valorPorcentajeAplicado);
@@ -47,7 +47,7 @@ public class ServicioDetalleContrato {
                 dtoContrato.getTiempoContratoMeses(),
                 dtoContrato.getTipoMoneda(),
                 dtoContrato.getTrmAplicada(),
-                dtoContrato.getPaquete(),
+                dtoContrato.getPaqueteContrato(),
                 dtoContrato.getFechaInstalacion(),
                 dtoContrato.getFechaCorte(),
                 dtoContrato.getFechaCorteAnterior(),

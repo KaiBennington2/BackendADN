@@ -19,19 +19,17 @@ import static org.mockito.Mockito.when;
 
 class ServicioDetalleContratoTest {
 
-    private static final String NO_EXISTE_EL_CONTRATO = "No se encontraron datos en el sistema.";
+    private static final String NO_EXISTE_EL_CONTRATO = "El contrato no existe en el sistema.";
 
-    private DaoContrato daoContrato;
     private ServicioDetalleContrato servicioDetalleContrato;
 
     @Test
-    @DisplayName("Deberia mostrar el detalle contrato de manera correcta")
-    void deberiaMostrarElDetalleDeContrato() {
+    @DisplayName("Debería mostrar el valor del detalle contrato de manera correcta")
+    void deberiaMostrarElDetalleDeContratoConValorCorrecto() {
         // arrange
         LocalDate fechaInstalacionBase = LocalDate.of(2022, 4, 22);
-
-        DtoContrato dtoContrato = new DtoContratoBuilder().conId(1L).conFechaInstalacion(fechaInstalacionBase).build();
-        daoContrato = Mockito.mock(DaoContrato.class);
+        DtoContrato dtoContrato = new DtoContratoBuilder().conId(1L).build();
+        DaoContrato daoContrato = Mockito.mock(DaoContrato.class);
         when(daoContrato.existsById(anyLong())).thenReturn(true);
         when(daoContrato.findById(anyLong())).thenReturn(dtoContrato);
         servicioDetalleContrato = new ServicioDetalleContrato(daoContrato);
@@ -45,12 +43,11 @@ class ServicioDetalleContratoTest {
     @DisplayName("Deberia lanzar excepcion por existencia de contrato")
     void deberiaLanzarExcepcionPorExistenciaPreviaDeContrato() {
         // arrange
-        DtoContrato dtoContrato = new DtoContratoBuilder().conId(1L).build();
-        daoContrato = Mockito.mock(DaoContrato.class);
+        DaoContrato daoContrato = Mockito.mock(DaoContrato.class);
         when(daoContrato.existsById(anyLong())).thenReturn(false);
         servicioDetalleContrato = new ServicioDetalleContrato(daoContrato);
         // act - assert
-        BasePrueba.assertThrows(() -> servicioDetalleContrato.ejecutar(dtoContrato.getId()),
+        BasePrueba.assertThrows(() -> servicioDetalleContrato.ejecutar(1L),
                 ExcepcionSinDatos.class,
                 NO_EXISTE_EL_CONTRATO);
     }

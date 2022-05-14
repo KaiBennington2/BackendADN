@@ -3,8 +3,10 @@ package com.ceiba.contrato.adaptador.dao;
 import com.ceiba.contrato.adaptador.mapper.MapeoContrato;
 import com.ceiba.contrato.modelo.dto.DtoContrato;
 import com.ceiba.contrato.puerto.dao.DaoContrato;
+import com.ceiba.infraestructura.excepcion.ExcepcionTecnica;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @Repository
 public class DaoContratoMysql implements DaoContrato {
 
+    private static final String CONTRATO_NO_ENCONTRADO = "El contrato no fue encontrado.";
     private static final String SQL_NAMESPACE = "contrato";
     private static final String ID = "id";
     private static final String NIT = "nit";
@@ -45,17 +48,24 @@ public class DaoContratoMysql implements DaoContrato {
 
     @Override
     public DtoContrato findById(Long id) {
-        MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue(ID, id);
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindById, paramSource, new MapeoContrato());
+        try {
+            MapSqlParameterSource paramSource = new MapSqlParameterSource();
+            paramSource.addValue(ID, id);
+            return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindById, paramSource, new MapeoContrato());
+        } catch (DataAccessException e) {
+            throw new ExcepcionTecnica(CONTRATO_NO_ENCONTRADO, e);
+        }
     }
 
     @Override
     public DtoContrato findByNit(String nit) {
-        MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue(NIT, nit);
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindByNit, paramSource, new MapeoContrato());
-
+        try {
+            MapSqlParameterSource paramSource = new MapSqlParameterSource();
+            paramSource.addValue(NIT, nit);
+            return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindByNit, paramSource, new MapeoContrato());
+        } catch (DataAccessException e) {
+            throw new ExcepcionTecnica(CONTRATO_NO_ENCONTRADO, e);
+        }
     }
 
     @Override

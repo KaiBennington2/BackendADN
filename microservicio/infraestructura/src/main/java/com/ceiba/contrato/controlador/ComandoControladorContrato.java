@@ -27,7 +27,7 @@ public class ComandoControladorContrato {
 
     @PostMapping
     @ApiOperation("Crear Contrato")
-    public ComandoRespuesta<Long> crear(@RequestBody ComandoContrato comandoContrato) {
+    public ComandoRespuesta<Long> create(@RequestBody ComandoContrato comandoContrato) {
         return manejadorCrearContrato.ejecutar(comandoContrato);
     }
 

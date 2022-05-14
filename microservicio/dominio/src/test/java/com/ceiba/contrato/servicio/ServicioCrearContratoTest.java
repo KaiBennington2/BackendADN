@@ -1,12 +1,10 @@
 package com.ceiba.contrato.servicio;
 
 import com.ceiba.BasePrueba;
-import com.ceiba.cliente.servicio.ServicioConsultaCliente;
 import com.ceiba.contrato.builders.ContratoTestDataBuilder;
 import com.ceiba.contrato.modelo.entidad.Contrato;
 import com.ceiba.contrato.puerto.repositorio.RepositorioContrato;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
-import com.ceiba.dominio.excepcion.ExcepcionSinDatos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,29 +20,26 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ServicioCrearContratoTest {
 
-    private static final String CLIENTE_NO_EXISTENTE = "El cliente [%s] no fue encontrado.";
-    private Contrato contrato;
+    private String EL_CONTRATO_YA_EXISTE_EN_EL_SISTEMA = "Para el cliente [%s], ya existe un contrato en el sistema.";
+
     //    @Mock
     private RepositorioContrato repositorioContrato;
-    private ServicioConsultaCliente servicioConsultaCliente;
     //    @InjectMocks
     private ServicioCrearContrato servicioCrearContrato;
 
     @BeforeEach
     void setUp() {
         repositorioContrato = Mockito.mock(RepositorioContrato.class);
-        servicioConsultaCliente = Mockito.mock(ServicioConsultaCliente.class);
-        servicioCrearContrato = new ServicioCrearContrato(repositorioContrato, servicioConsultaCliente);
+        servicioCrearContrato = new ServicioCrearContrato(repositorioContrato);
     }
 
     @Test
     @DisplayName("Deberia crear un contrato con paquete Basico")
     void deberiaCrearContratoDeManeraCorrecta() {
         // arrange
-        contrato = new ContratoTestDataBuilder().build();
-        Mockito.when(repositorioContrato.crear(ArgumentMatchers.any(Contrato.class))).thenReturn(1L);
+        Contrato contrato = new ContratoTestDataBuilder().build();
         Mockito.when(repositorioContrato.existsByNit(ArgumentMatchers.anyString())).thenReturn(false);
-        Mockito.when(servicioConsultaCliente.existsByNit(ArgumentMatchers.anyString())).thenReturn(true);
+        Mockito.when(repositorioContrato.crear(ArgumentMatchers.any(Contrato.class))).thenReturn(1L);
         // act
         Long ejecutar = servicioCrearContrato.execute(contrato);
         // Assert
@@ -55,10 +50,9 @@ class ServicioCrearContratoTest {
     @DisplayName("Deberia crear un contrato con paquete Premium")
     void deberiaCrearContratoDeManeraCorrectaConPaquetePremium() {
         // arrange
-        contrato = new ContratoTestDataBuilder().conPaquete("PREMIUM").build();
-        Mockito.when(repositorioContrato.crear(ArgumentMatchers.any(Contrato.class))).thenReturn(1L);
+        Contrato contrato = new ContratoTestDataBuilder().conPaquete("PREMIUM").build();
         Mockito.when(repositorioContrato.existsByNit(ArgumentMatchers.anyString())).thenReturn(false);
-        Mockito.when(servicioConsultaCliente.existsByNit(ArgumentMatchers.anyString())).thenReturn(true);
+        Mockito.when(repositorioContrato.crear(ArgumentMatchers.any(Contrato.class))).thenReturn(1L);
         // act
         Long ejecutar = servicioCrearContrato.execute(contrato);
         // Assert
@@ -66,13 +60,12 @@ class ServicioCrearContratoTest {
     }
 
     @Test
-    @DisplayName("Deberia crear un contrato con paquete Compact")
+    @DisplayName("Deberia crear un contrato con paquete Compacto")
     void deberiaCrearContratoDeManeraCorrectaConPaqueteCompact() {
         // arrange
-        contrato = new ContratoTestDataBuilder().conPaquete("COMPACT").build();
-        Mockito.when(repositorioContrato.crear(ArgumentMatchers.any(Contrato.class))).thenReturn(1L);
+        Contrato contrato = new ContratoTestDataBuilder().conPaquete("compacto").build();
         Mockito.when(repositorioContrato.existsByNit(ArgumentMatchers.anyString())).thenReturn(false);
-        Mockito.when(servicioConsultaCliente.existsByNit(ArgumentMatchers.anyString())).thenReturn(true);
+        Mockito.when(repositorioContrato.crear(ArgumentMatchers.any(Contrato.class))).thenReturn(1L);
         // act
         Long ejecutar = servicioCrearContrato.execute(contrato);
         // Assert
@@ -80,27 +73,15 @@ class ServicioCrearContratoTest {
     }
 
     @Test
-    @DisplayName("Deberia lanzar una excepcion por existencia del contrato en el sistema")
+    @DisplayName("Debería lanzar una excepción por existencia del contrato en el sistema")
     void deberiaLanzarExceptionPorExistenciaDelContrato() {
         // arrange
-        contrato = new ContratoTestDataBuilder().build();
+        Contrato contrato = new ContratoTestDataBuilder().build();
         when(repositorioContrato.existsByNit(anyString())).thenReturn(true);
         // act - assert
         BasePrueba.assertThrows(() -> servicioCrearContrato.execute(contrato),
                 ExcepcionDuplicidad.class,
-                String.format("Para el cliente [%s], ya existe un contrato en el sistema.",
+                String.format(EL_CONTRATO_YA_EXISTE_EN_EL_SISTEMA,
                         contrato.getCliente().getNit()));
-    }
-
-    @Test
-    @DisplayName("Deberia lanzar una excepcion por que el nit de cliente no existe.")
-    void deberiaLanzarExceptionPorNoExistenciaDelCliente() {
-        // arrange
-        contrato = new ContratoTestDataBuilder().build();
-        when(servicioConsultaCliente.existsByNit(anyString())).thenReturn(false);
-        // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearContrato.execute(contrato),
-                ExcepcionSinDatos.class,
-                String.format(CLIENTE_NO_EXISTENTE, contrato.getCliente().getNit()));
     }
 }

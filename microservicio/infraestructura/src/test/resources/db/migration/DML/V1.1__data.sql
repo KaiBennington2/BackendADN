@@ -22,7 +22,7 @@ INSERT INTO contratos(id, nit_cliente, duracion_contrato_meses, tipo_moneda, trm
 VALUES (1,'1234567',24,'USD','3702.86','PREMIUM',now(),'2022-05-12');
 
 INSERT INTO contratos(id, nit_cliente, duracion_contrato_meses, tipo_moneda, trm_aplicada, paquete, fecha_instalacion, fecha_corte)
-VALUES (2,'0987654',12,'COP','4020.52','COMPACT',now(),'2022-05-05');
+VALUES (2,'0987654',12,'COP','4020.52','COMPACTO',now(),'2022-05-05');
 
 INSERT INTO contratos(id, nit_cliente, duracion_contrato_meses, tipo_moneda, trm_aplicada, paquete, fecha_instalacion, fecha_corte)
-VALUES (3,'1029384',12,'USD','3065.43','BASIC',now(),'2022-06-09');
+VALUES (3,'1029384',12,'USD','3065.43','BASICO',now(),'2022-06-09');

@@ -14,7 +14,7 @@ public class DtoContratoDetalle {
     private Integer tiempoContratoMeses;
     private String tipoMoneda;
     private BigDecimal trmAplicada;
-    private String paquete;
+    private String paqueteContrato;
     private LocalDate fechaInstalacion;
     private LocalDate fechaCorte;
     private LocalDate fechaCorteAnterior;

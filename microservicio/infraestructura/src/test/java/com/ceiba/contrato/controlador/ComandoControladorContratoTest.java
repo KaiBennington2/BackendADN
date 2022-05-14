@@ -17,7 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -31,8 +32,6 @@ class ComandoControladorContratoTest {
     @Autowired
     private MockMvc mocMvc;
 
-    private ComandoContrato contrato;
-
     @BeforeEach
     private void setUp() {
         objectMapper = new ObjectMapper();
@@ -42,10 +41,10 @@ class ComandoControladorContratoTest {
     }
 
     @Test
-    @DisplayName("Deberia integrar: crear contratos de manera correcta")
+    @DisplayName("Debería integrar: crear contratos de manera correcta")
     void crear() throws Exception {
         // arrange
-        contrato = new ComandoContratoTestDataBuilder().build();
+        ComandoContrato contrato = new ComandoContratoTestDataBuilder().build();
         // act - assert
         mocMvc.perform(post("/contratos")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -58,13 +57,29 @@ class ComandoControladorContratoTest {
     @DisplayName("Deberia dar excepcion al intentar crear sin campo fecha instalacion obligatorio.")
     void intentarCrearSinFechaInstalacionDaException() throws Exception {
         // arrange
-        contrato = new ComandoContratoTestDataBuilder().conFechaInstalacion(null).build();
+        ComandoContrato contrato = new ComandoContratoTestDataBuilder().conFechaInstalacion(null).build();
         // - act - assert
         mocMvc.perform(post("/contratos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(contrato)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.mensaje")
-                        .value("La FECHA INSTALACIÓN es un requisito obligatorio."));
+                        .value("La Fecha Instalación es un requisito obligatorio."));
+    }
+
+    @Test
+    @DisplayName("Deberia integrar: eliminar un contrato de manera correcta")
+    void eliminar() throws Exception {
+        // arrange
+        // act - assert
+        mocMvc.perform(delete("/contratos/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mocMvc.perform(get("/contratos")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 }

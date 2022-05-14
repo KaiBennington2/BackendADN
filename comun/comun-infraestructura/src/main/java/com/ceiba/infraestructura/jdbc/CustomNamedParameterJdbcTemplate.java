@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Map;
 
 @Repository
 public class CustomNamedParameterJdbcTemplate {
@@ -23,6 +24,14 @@ public class CustomNamedParameterJdbcTemplate {
 
     public Long crear(Object object, String sql) {
         MapSqlParameterSource paramSource = crearParametros(object);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        this.namedParameterJdbcTemplate.update(sql, paramSource, keyHolder, new String[]{"id"});
+        return keyHolder.getKey().longValue();
+    }
+
+    public Long crearParametrosExtras(Object object, String sql, Map<String,Object> paramsExtras) {
+        MapSqlParameterSource paramSource = crearParametros(object);
+        paramSource.addValues(paramsExtras);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         this.namedParameterJdbcTemplate.update(sql, paramSource, keyHolder, new String[]{"id"});
         return keyHolder.getKey().longValue();

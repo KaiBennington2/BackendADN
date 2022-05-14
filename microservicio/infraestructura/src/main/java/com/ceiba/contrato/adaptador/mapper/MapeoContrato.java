@@ -16,16 +16,25 @@ public class MapeoContrato implements RowMapper<DtoContrato>, MapperResult {
     public DtoContrato mapRow(ResultSet rs, int rowNum) throws SQLException {
 
         Long id = rs.getLong("id");
-        String nitCustomer = rs.getString("nit_cliente");
-        Integer contractTime = rs.getInt("duracion_contrato_meses");
-        String coinType = rs.getString("tipo_moneda");
-        BigDecimal trmApplied = rs.getBigDecimal("trm_aplicada");
-        String packet = rs.getString("paquete");
-        LocalDate installDate = extraerLocalDate(rs, "fecha_instalacion");
-        LocalDate cutOffDate = extraerLocalDate(rs, "fecha_corte");
-        LocalDate cutOffBeforeDate = extraerLocalDate(rs, "fecha_corte_anterior");
+        String nitCliente = rs.getString("nit_cliente");
+        Integer tiempoContratoMeses = rs.getInt("duracion_contrato_meses");
+        String tipoMoneda = rs.getString("tipo_moneda");
+        BigDecimal trmAplicada = rs.getBigDecimal("trm_aplicada");
+        String paqueteContrato = rs.getString("paquete");
+        LocalDate fechaInstalacion = extraerLocalDate(rs, "fecha_instalacion");
+        LocalDate fechaCorte = extraerLocalDate(rs, "fecha_corte");
+        LocalDate fechaCorteAnterior = extraerLocalDate(rs, "fecha_corte_anterior");
 
-        return new DtoContrato(id, nitCustomer, contractTime, coinType, trmApplied, packet, installDate, cutOffDate, cutOffBeforeDate);
+        return new DtoContrato(
+                id,
+                nitCliente,
+                tiempoContratoMeses,
+                tipoMoneda,
+                trmAplicada,
+                paqueteContrato,
+                fechaInstalacion,
+                fechaCorte,
+                fechaCorteAnterior);
     }
 
 }

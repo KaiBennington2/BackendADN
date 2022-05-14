@@ -40,87 +40,79 @@ class ConsultaControladorContratoTest {
     @Test
     @DisplayName("Deberia integrar: listar todos los contratos de manera correcta")
     void listarTodos() throws Exception {
-
-        //arrange - act - assert
+        // arrange
         LocalDate fechaCorte = LocalDate.of(2022, 5, 12);
-
+        // act - assert
         mockMvc.perform(get("/contratos")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(4)))
-                .andExpect(jsonPath("$[0].nitCustomer", is("1234567")))
-                .andExpect(jsonPath("$[0].contractTime", is(24)))
-                .andExpect(jsonPath("$[0].coinType", is("USD")))
-                .andExpect(jsonPath("$[0].trmApplied", is(3702.86)))
-                .andExpect(jsonPath("$[0].packet", is(PaquetesContratos.PREMIUM.getNombre())))
-                .andExpect(jsonPath("$[0].installDate", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
-                .andExpect(jsonPath("$[0].cutOffDate", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))));
+                .andExpect(jsonPath("$[0].nitCliente", is("1234567")))
+                .andExpect(jsonPath("$[0].tiempoContratoMeses", is(24)))
+                .andExpect(jsonPath("$[0].tipoMoneda", is("USD")))
+                .andExpect(jsonPath("$[0].trmAplicada", is(3702.86)))
+                .andExpect(jsonPath("$[0].paqueteContrato", is(PaquetesContratos.PREMIUM.getNombre())))
+                .andExpect(jsonPath("$[0].fechaInstalacion", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
+                .andExpect(jsonPath("$[0].fechaCorte", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))));
     }
 
     @Test
     @DisplayName("Deberia integrar: listr contrato por id de manera correcta")
     void listarPorId() throws Exception {
-
         // arrange
         LocalDate fechaCorte = LocalDate.of(2022, 5, 5);
-
         // act - assert
         mockMvc.perform(get("/contratos/2")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.nitCustomer", is("0987654")))
-                .andExpect(jsonPath("$.contractTime", is(12)))
-                .andExpect(jsonPath("$.coinType", is("COP")))
-                .andExpect(jsonPath("$.trmApplied", is(4020.52)))
-                .andExpect(jsonPath("$.packet", is(PaquetesContratos.COMPACT.getName())))
-                .andExpect(jsonPath("$.installDate", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
-                .andExpect(jsonPath("$.cutOffDate", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))));
+                .andExpect(jsonPath("$.nitCliente", is("0987654")))
+                .andExpect(jsonPath("$.tiempoContratoMeses", is(12)))
+                .andExpect(jsonPath("$.tipoMoneda", is("COP")))
+                .andExpect(jsonPath("$.trmAplicada", is(4020.52)))
+                .andExpect(jsonPath("$.paqueteContrato", is(PaquetesContratos.COMPACTO.getNombre())))
+                .andExpect(jsonPath("$.fechaInstalacion", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
+                .andExpect(jsonPath("$.fechaCorte", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))));
     }
 
     @Test
     @DisplayName("Deberia integrar: listar contrato por nit [RequestParam] de manera correcta")
     void listarPorNitRequestParam() throws Exception {
-
+        // arrange
         LocalDate fechaCorte = LocalDate.of(2022, 6, 9);
-
-        //arrange - act - assert
+        // act - assert
         mockMvc.perform(get("/contratos/op").param("nit", "1029384")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.contractTime", is(12)))
-                .andExpect(jsonPath("$.coinType", is("USD")))
-                .andExpect(jsonPath("$.trmApplied", is(3065.43)))
-                .andExpect(jsonPath("$.packet", is(PaquetesContratos.BASIC.getName())))
-                .andExpect(jsonPath("$.installDate", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
-                .andExpect(jsonPath("$.cutOffDate", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))));
+                .andExpect(jsonPath("$.tiempoContratoMeses", is(12)))
+                .andExpect(jsonPath("$.tipoMoneda", is("USD")))
+                .andExpect(jsonPath("$.trmAplicada", is(3065.43)))
+                .andExpect(jsonPath("$.paqueteContrato", is(PaquetesContratos.BASICO.getNombre())))
+                .andExpect(jsonPath("$.fechaInstalacion", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
+                .andExpect(jsonPath("$.fechaCorte", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))));
     }
 
     @Test
     @DisplayName("Deberia integrar: obtener el detalle del contrato de manera correcta")
     void obtenerDetallContratoExistenteRequestParam() throws Exception {
-
         // arrange
         LocalDate fechaCorte = LocalDate.of(2022, 5, 12);
-
         // act - assert
         mockMvc.perform(get("/contratos/op").param("detail", "1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-
-                .andExpect(jsonPath("$.nitCustomer", is("1234567")))
-                .andExpect(jsonPath("$.contractTime", is(24)))
-                .andExpect(jsonPath("$.coinType", is("USD")))
-                .andExpect(jsonPath("$.trmApplied", is(3702.86)))
-                .andExpect(jsonPath("$.packet", is(PaquetesContratos.PREMIUM.getNombre())))
-                .andExpect(jsonPath("$.installDate", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
-                .andExpect(jsonPath("$.cutOffDate", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))))
-                .andExpect(jsonPath("$.contractValue", is(338)));
+                .andExpect(jsonPath("$.nitCliente", is("1234567")))
+                .andExpect(jsonPath("$.tiempoContratoMeses", is(24)))
+                .andExpect(jsonPath("$.tipoMoneda", is("USD")))
+                .andExpect(jsonPath("$.trmAplicada", is(3702.86)))
+                .andExpect(jsonPath("$.paqueteContrato", is(PaquetesContratos.PREMIUM.getNombre())))
+                .andExpect(jsonPath("$.fechaInstalacion", is(fechaInstalacion.format(DateTimeFormatter.ISO_DATE))))
+                .andExpect(jsonPath("$.fechaCorte", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))))
+                .andExpect(jsonPath("$.valorContrato", is(338)));
 
     }
 }
