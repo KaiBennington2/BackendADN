@@ -4,6 +4,7 @@ import com.ceiba.BasePrueba;
 import com.ceiba.cliente.builders.ClienteTestDataBuilder;
 import com.ceiba.cliente.modelo.dto.DtoCliente;
 import com.ceiba.cliente.modelo.entidad.Cliente;
+import com.ceiba.cliente.puerto.dao.DaoCliente;
 import com.ceiba.cliente.puerto.repositories.RepositorioCliente;
 import com.ceiba.contrato.servicio.ServicioConsultaContrato;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
@@ -24,20 +25,23 @@ class ServicioEliminarClienteTest {
     private Cliente cliente;
     private DtoCliente dtoCliente;
     private RepositorioCliente repositorioCliente;
+    private DaoCliente daoCliente;
     private ServicioConsultaContrato servicioConsultaContrato;
 
     @Test
     @DisplayName("Deberia eliminar el cliente de manera correcta")
     void deberiaEliminarElClienteDeManeraCorrecta() {
-        cliente = new ClienteTestDataBuilder().conId(4L).conNit("1234").build();
+        cliente = new ClienteTestDataBuilder().conId(4L).conNit("12345").build();
         dtoCliente = mapperClienteToDtoCliente(cliente);
         repositorioCliente = Mockito.mock(RepositorioCliente.class);
+        daoCliente = Mockito.mock(DaoCliente.class);
         servicioConsultaContrato = Mockito.mock(ServicioConsultaContrato.class);
-        when(repositorioCliente.existsById(anyLong())).thenReturn(Boolean.TRUE);
-        when(repositorioCliente.findById(anyLong())).thenReturn(dtoCliente);
+
+        when(daoCliente.existsById(anyLong())).thenReturn(Boolean.TRUE);
+        when(daoCliente.findById(anyLong())).thenReturn(dtoCliente);
         when(servicioConsultaContrato.existsByNit(anyString())).thenReturn(Boolean.FALSE);
 
-        ServicioEliminarCliente servicioEliminarCliente = new ServicioEliminarCliente(repositorioCliente, servicioConsultaContrato);
+        ServicioEliminarCliente servicioEliminarCliente = new ServicioEliminarCliente(repositorioCliente, daoCliente, servicioConsultaContrato);
         servicioEliminarCliente.ejecutar(4L);
 
         Mockito.verify(repositorioCliente, Mockito.times(1)).delete(4L);
@@ -49,12 +53,13 @@ class ServicioEliminarClienteTest {
         cliente = new ClienteTestDataBuilder().conId(1L).conNit("1234567").build();
         dtoCliente = mapperClienteToDtoCliente(cliente);
         repositorioCliente = Mockito.mock(RepositorioCliente.class);
+        daoCliente = Mockito.mock(DaoCliente.class);
         servicioConsultaContrato = Mockito.mock(ServicioConsultaContrato.class);
-        when(repositorioCliente.existsById(anyLong())).thenReturn(Boolean.TRUE);
-        when(repositorioCliente.findById(anyLong())).thenReturn(dtoCliente);
+        when(daoCliente.existsById(anyLong())).thenReturn(Boolean.TRUE);
+        when(daoCliente.findById(anyLong())).thenReturn(dtoCliente);
         when(servicioConsultaContrato.existsByNit(anyString())).thenReturn(Boolean.TRUE);
 
-        ServicioEliminarCliente servicioEliminarCliente = new ServicioEliminarCliente(repositorioCliente, servicioConsultaContrato);
+        ServicioEliminarCliente servicioEliminarCliente = new ServicioEliminarCliente(repositorioCliente, daoCliente, servicioConsultaContrato);
         // act - assert
         BasePrueba.assertThrows(() -> servicioEliminarCliente.ejecutar(1L),
                 ExcepcionDuplicidad.class,
@@ -65,10 +70,11 @@ class ServicioEliminarClienteTest {
     @DisplayName("Deberia lanzar excepcion por no existencia del cliente")
     void deberiaLanzarExcepcionPorNoExistenciaCliente() {
         repositorioCliente = Mockito.mock(RepositorioCliente.class);
+        daoCliente = Mockito.mock(DaoCliente.class);
         servicioConsultaContrato = Mockito.mock(ServicioConsultaContrato.class);
-        when(repositorioCliente.existsById(anyLong())).thenReturn(Boolean.FALSE);
+        when(daoCliente.existsById(anyLong())).thenReturn(Boolean.FALSE);
 
-        ServicioEliminarCliente servicioEliminarCliente = new ServicioEliminarCliente(repositorioCliente, servicioConsultaContrato);
+        ServicioEliminarCliente servicioEliminarCliente = new ServicioEliminarCliente(repositorioCliente, daoCliente, servicioConsultaContrato);
         // act - assert
         BasePrueba.assertThrows(() -> servicioEliminarCliente.ejecutar(1L),
                 ExcepcionSinDatos.class,

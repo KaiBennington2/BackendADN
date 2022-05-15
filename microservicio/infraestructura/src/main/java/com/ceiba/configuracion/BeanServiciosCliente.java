@@ -24,8 +24,8 @@ public class BeanServiciosCliente {
     }
 
     @Bean
-    public ServicioEliminarCliente customerDeleteService(RepositorioCliente repositorioCliente,ServicioConsultaContrato servicioConsultaContrato) {
-        return new ServicioEliminarCliente(repositorioCliente, servicioConsultaContrato);
+    public ServicioEliminarCliente customerDeleteService(RepositorioCliente repositorioCliente, DaoCliente daoCliente, ServicioConsultaContrato servicioConsultaContrato) {
+        return new ServicioEliminarCliente(repositorioCliente, daoCliente, servicioConsultaContrato);
     }
 
     @Bean

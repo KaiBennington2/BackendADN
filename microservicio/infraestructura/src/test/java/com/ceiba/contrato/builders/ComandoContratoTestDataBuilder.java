@@ -15,7 +15,7 @@ public class ComandoContratoTestDataBuilder {
     private LocalDate fechaInstalacion;
 
     public ComandoContratoTestDataBuilder() {
-        nitCliente = "1234";
+        nitCliente = "12345";
         tipoMoneda = "USD";
         trmAplicada = new BigDecimal("3702.86");
         paquete = "BASICO";

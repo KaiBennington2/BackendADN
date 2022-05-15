@@ -33,7 +33,7 @@ class ComandoControladorClienteTest {
     private ComandoCliente comandoCliente;
 
     @Test
-    @DisplayName("Deberia integrar: crear cliente de manera correcta")
+    @DisplayName("Debería integrar: crear cliente de manera correcta")
     void create() throws Exception {
         // arrange
         comandoCliente = new ComandoClienteTestDataBuilder().build();
@@ -47,10 +47,14 @@ class ComandoControladorClienteTest {
     }
 
     @Test
-    @DisplayName("Deberia integrar: actualizar cliente de manera correcta")
+    @DisplayName("Debería integrar: actualizar cliente de manera correcta")
     void update() throws Exception {
         // arrange
-        comandoCliente = new ComandoClienteTestDataBuilder().conId(1L).conNit("1234567").build();
+        ComandoCliente comandoCliente = new ComandoClienteTestDataBuilder()
+                .conId(5L)
+                .conNit("123465")
+                .conRazonSocial("prueba").build();
+//        (5,'123465','base S.A.S.','Base','000567890','Cll 444 # 40 - 50');
         // act - assert
         mockMvc.perform(put("/clientes/{id}",comandoCliente.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -59,7 +63,7 @@ class ComandoControladorClienteTest {
     }
 
     @Test
-    @DisplayName("Deberia integrar: eliminar un cliente de manera correcta")
+    @DisplayName("Debería integrar: eliminar un cliente de manera correcta")
     void deletee() throws Exception {
         // arrange
         comandoCliente = new ComandoClienteTestDataBuilder().conId(5L).conNit("123465").build();

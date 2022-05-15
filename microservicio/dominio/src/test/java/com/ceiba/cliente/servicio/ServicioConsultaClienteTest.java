@@ -29,4 +29,18 @@ class ServicioConsultaClienteTest {
         // assert
         assertEquals(Boolean.TRUE, expected);
     }
+
+    @Test
+    @DisplayName("Deberia devolver FALSE por no existencia de cliente")
+    void noExistsByNit() {
+        // arrange
+        cliente = new ClienteTestDataBuilder().build();
+        daoCliente = Mockito.mock(DaoCliente.class);
+        servicioConsultaCliente = new ServicioConsultaCliente(daoCliente);
+        when(daoCliente.existsByNit(cliente.getNit())).thenReturn(Boolean.FALSE);
+        // act
+        Boolean expected = servicioConsultaCliente.existsByNit(cliente.getNit());
+        // assert
+        assertEquals(Boolean.FALSE, expected);
+    }
 }

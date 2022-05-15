@@ -30,7 +30,7 @@ class ConsultaControladorClienteTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("Deberia listar todos los clientes")
+    @DisplayName("Debería listar todos los clientes")
     void listarTodos() throws Exception {
         // arrange
         // act - assert
@@ -38,15 +38,15 @@ class ConsultaControladorClienteTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(5)))
-                .andExpect(jsonPath("$[0].nitCustomer", is("1234567")))
-                .andExpect(jsonPath("$[0].companyName", is("Pruebas S.A.S.")))
-                .andExpect(jsonPath("$[0].representantName", is("Kai Bennington")))
-                .andExpect(jsonPath("$[0].phone", is("3013101550")))
-                .andExpect(jsonPath("$[0].adress", is("Cll 000 # 01 - 02")));
+                .andExpect(jsonPath("$[0].nitCliente", is("1234567")))
+                .andExpect(jsonPath("$[0].razonSocial", is("Pruebas S.A.S.")))
+                .andExpect(jsonPath("$[0].nombreRepresentante", is("Kai Bennington")))
+                .andExpect(jsonPath("$[0].telefono", is("3013101550")))
+                .andExpect(jsonPath("$[0].direccion", is("Cll 000 # 01 - 02")));
     }
 
     @Test
-    @DisplayName("Deberia listar un cliente con el id dado")
+    @DisplayName("Debería listar un cliente con el id dado")
     void listarPorId() throws Exception {
         // arrange
         // act - assert
@@ -54,15 +54,15 @@ class ConsultaControladorClienteTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.nitCustomer", is("0987654")))
-                .andExpect(jsonPath("$.companyName", is("Tests S.A.S.")))
-                .andExpect(jsonPath("$.representantName", is("Alonso Bennington")))
-                .andExpect(jsonPath("$.phone", is("3023111660")))
-                .andExpect(jsonPath("$.adress", is("Cll 111 # 03 - 04")));
+                .andExpect(jsonPath("$.nitCliente", is("0987654")))
+                .andExpect(jsonPath("$.razonSocial", is("Tests S.A.S.")))
+                .andExpect(jsonPath("$.nombreRepresentante", is("Alonso Bennington")))
+                .andExpect(jsonPath("$.telefono", is("3023111660")))
+                .andExpect(jsonPath("$.direccion", is("Cll 111 # 03 - 04")));
     }
 
     @Test
-    @DisplayName("Deberia lanzar excepcion por id no existente")
+    @DisplayName("Debería lanzar excepcion por id no existente")
     void deberiaLanzarExceptionPorIdNoExistente() throws Exception {
         // arrange
         // act - assert
@@ -76,7 +76,7 @@ class ConsultaControladorClienteTest {
     }
 
     @Test
-    @DisplayName("Deberia listar cliente con el nit dado")
+    @DisplayName("Debería listar cliente con el nit dado")
     void listarPorNit() throws Exception {
         // arrange
         // act - assert
@@ -84,9 +84,9 @@ class ConsultaControladorClienteTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.companyName", is("Empresa S.A.S.")))
-                .andExpect(jsonPath("$.representantName", is("Cliente Prueba")))
-                .andExpect(jsonPath("$.phone", is("3023013065")))
-                .andExpect(jsonPath("$.adress", is("Cll 222 # 13 - 24")));
+                .andExpect(jsonPath("$.razonSocial", is("Empresa S.A.S.")))
+                .andExpect(jsonPath("$.nombreRepresentante", is("Cliente Prueba")))
+                .andExpect(jsonPath("$.telefono", is("3023013065")))
+                .andExpect(jsonPath("$.direccion", is("Cll 222 # 13 - 24")));
     }
 }

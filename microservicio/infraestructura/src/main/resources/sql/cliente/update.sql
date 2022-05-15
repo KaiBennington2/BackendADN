@@ -1,8 +1,8 @@
 update clientes
-set nit = :nitCustomer,
-	razon_social = :companyName,
-	nombre_representante = :representantName,
-	telefono = :phone,
-	direccion = :adress,
-	fecha_modificacion = :modifiedDate
+set nit = :nit,
+	razon_social = :razonSocial,
+	nombre_representante = :nombreRepresentante,
+	telefono = :telefono,
+	direccion = :direccion,
+	fecha_modificacion = :fechaModificacion
 where id = :id;

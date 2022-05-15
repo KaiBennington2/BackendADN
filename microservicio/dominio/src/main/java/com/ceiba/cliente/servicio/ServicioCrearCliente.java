@@ -8,19 +8,19 @@ public class ServicioCrearCliente {
 
     private static final String EXISTS = "el cliente ya existe en el sistema.";
 
-    private final RepositorioCliente customerRepository;
+    private final RepositorioCliente repositorioCliente;
 
-    public ServicioCrearCliente(RepositorioCliente customerRepository) {
-        this.customerRepository = customerRepository;
+    public ServicioCrearCliente(RepositorioCliente repositorioCliente) {
+        this.repositorioCliente = repositorioCliente;
     }
 
     public Long execute(Cliente cliente) {
         validarExistenciaPrevia(cliente);
-        return customerRepository.create(cliente);
+        return repositorioCliente.create(cliente);
     }
 
     private void validarExistenciaPrevia(Cliente cliente) {
-        if (customerRepository.existsByNit(cliente.getNit())) {
+        if (repositorioCliente.existsByNit(cliente.getNit())) {
             throw new ExcepcionDuplicidad(EXISTS);
         }
     }

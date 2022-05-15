@@ -1,17 +1,24 @@
 package com.ceiba.cliente.adaptador.repositorio;
 
-import com.ceiba.cliente.adaptador.mapper.MapeoCliente;
-import com.ceiba.cliente.modelo.dto.DtoCliente;
 import com.ceiba.cliente.modelo.entidad.Cliente;
 import com.ceiba.cliente.puerto.repositories.RepositorioCliente;
+import com.ceiba.infraestructura.excepcion.ExcepcionTecnica;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class RepositorioClienteMysql implements RepositorioCliente {
 
+    private static final String ERROR_AL_GUARDAR = "Ocurrió un Error al tratar de guardar el cliente";
+    private static final String ERROR_AL_MODIFICAR = "Ocurrió un Error al tratar de modificar el cliente";
     private static final String SQL_NAMESPACE = "cliente";
     private static final String ID = "id";
     private static final String NIT = "nit";
@@ -31,9 +38,6 @@ public class RepositorioClienteMysql implements RepositorioCliente {
     @SqlStatement(namespace = SQL_NAMESPACE, value = "existsByNit")
     private static String sqlExistsByNit;
 
-    @SqlStatement(namespace = SQL_NAMESPACE, value = "findById")
-    private static String sqlFindById;
-
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
     public RepositorioClienteMysql(CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate) {
@@ -42,41 +46,43 @@ public class RepositorioClienteMysql implements RepositorioCliente {
 
     @Override
     public Long create(Cliente cliente) {
-        return customNamedParameterJdbcTemplate.crear(cliente, sqlCreate);
+        try {
+            return customNamedParameterJdbcTemplate.crear(cliente, sqlCreate);
+        } catch (DataAccessException e) {
+            throw new ExcepcionTecnica(ERROR_AL_GUARDAR, e);
+        }
     }
 
     @Override
     public void update(Cliente cliente) {
-        this.customNamedParameterJdbcTemplate.actualizar(cliente, sqlUpdate);
+        try {
+            Map params = new HashMap();
+            params.put("fechaModificacion", LocalDateTime.now());
+            this.customNamedParameterJdbcTemplate.actualizarParametrosExtras(cliente, sqlUpdate, params);
+        } catch (DataAccessException e) {
+            throw new ExcepcionTecnica(ERROR_AL_MODIFICAR, e);
+        }
     }
 
     @Override
     public void delete(Long id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(ID, id);
-        this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlDelete,params);
+        this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlDelete, params);
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public Boolean existsByNit(String nit) {
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue(NIT, nit);
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsByNit, paramSource, Boolean.class);
+    }
+
+    @Override
+    public Boolean existsById(Long id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(ID, id);
         return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsById, params, Boolean.class);
     }
-
-    @Override
-    public DtoCliente findById(Long id) {
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue(ID, id);
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindById, params, new MapeoCliente());
-    }
-
-    @Override
-    public boolean existsByNit(String nit) {
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue(NIT, nit);
-        return Boolean.TRUE.equals(customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsByNit, params, Boolean.class));
-    }
-
 
 }

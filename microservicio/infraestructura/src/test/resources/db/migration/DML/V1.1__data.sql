@@ -12,7 +12,7 @@ INSERT INTO clientes(id, nit, razon_social, nombre_representante, telefono, dire
 VALUES (3,'1029384','Empresa S.A.S.','Cliente Prueba','3023013065','Cll 222 # 13 - 24');
 
 INSERT INTO clientes(id, nit, razon_social, nombre_representante, telefono, direccion)
-VALUES (4,'1234','cliente base S.A.S.','Cliente Base','1234567890','Cll 000 # 00 - 00');
+VALUES (4,'12345','cliente base S.A.S.','Cliente Base','1234567890','Cll 000 # 00 - 00');
 
 INSERT INTO clientes(id, nit, razon_social, nombre_representante, telefono, direccion)
 VALUES (5,'123465','base S.A.S.','Base','000567890','Cll 444 # 40 - 50');

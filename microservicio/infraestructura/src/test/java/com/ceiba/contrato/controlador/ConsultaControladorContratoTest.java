@@ -46,6 +46,7 @@ class ConsultaControladorContratoTest {
         mockMvc.perform(get("/contratos")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+//        VALUES (1,'1234567',24,'USD','3702.86','PREMIUM',now(),'2022-05-12');
                 .andExpect(jsonPath("$[0].nitCliente", is("1234567")))
                 .andExpect(jsonPath("$[0].tiempoContratoMeses", is(24)))
                 .andExpect(jsonPath("$[0].tipoMoneda", is("USD")))
@@ -114,5 +115,19 @@ class ConsultaControladorContratoTest {
                 .andExpect(jsonPath("$.fechaCorte", is(fechaCorte.format(DateTimeFormatter.ISO_DATE))))
                 .andExpect(jsonPath("$.valorContrato", is(338)));
 
+    }
+
+    @Test
+    @DisplayName("Debería lanzar excepcion por id no existente")
+    void deberiaLanzarExceptionPorIdNoExistente() throws Exception {
+        // arrange
+        // act - assert
+        mockMvc.perform(get("/contratos/1333")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+
+        mockMvc.perform(get("/contratos/op?nit=15501")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
     }
 }

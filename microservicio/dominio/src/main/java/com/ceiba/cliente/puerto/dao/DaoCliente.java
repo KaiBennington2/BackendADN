@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface DaoCliente {
 
+    Boolean existsById(Long id);
+
     Boolean existsByNit(String nit);
 
     List<DtoCliente> findAll();

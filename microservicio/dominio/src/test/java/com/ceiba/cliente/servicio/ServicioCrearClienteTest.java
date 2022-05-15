@@ -21,7 +21,6 @@ class ServicioCrearClienteTest {
     private final static String EXISTS = "el cliente ya existe en el sistema.";
     private final static String NIT_REQUIRED = "El nit de cliente es un campo requerido.";
 
-    private Cliente cliente;
     private DaoCliente customerDao;
     private RepositorioCliente customerRepository;
     private ServicioCrearCliente servicioCrearCliente;
@@ -41,11 +40,10 @@ class ServicioCrearClienteTest {
     @DisplayName("Deberia Crear un cliente de manera correcta")
     void deberiaCrearClienteDeManeraCorrecta() {
         // arrange
-        cliente = new ClienteTestDataBuilder().build();
-        customerDao = Mockito.mock(DaoCliente.class);
+        Cliente cliente = new ClienteTestDataBuilder().build();
         customerRepository = Mockito.mock(RepositorioCliente.class);
-        servicioCrearCliente = new ServicioCrearCliente(customerRepository);
         when(customerRepository.create(any(Cliente.class))).thenReturn(1L);
+        servicioCrearCliente = new ServicioCrearCliente(customerRepository);
         // act
         Long idExpected = servicioCrearCliente.execute(cliente);
         // assert
@@ -56,7 +54,7 @@ class ServicioCrearClienteTest {
     @DisplayName("Deberia lanzar una exepecion por existencia del cliente en el sistema")
     void deberiaLanzarExceptionPorExistenciaDelCliente() {
         // arrange
-        cliente = new ClienteTestDataBuilder().build();
+        Cliente cliente = new ClienteTestDataBuilder().build();
         customerRepository = Mockito.mock(RepositorioCliente.class);
         when(customerRepository.existsByNit(anyString())).thenReturn(true);
 

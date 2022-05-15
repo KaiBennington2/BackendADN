@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SalariosMinimosAnnosTest {
 
-    private static final String ANNO_SALARIO_MINIMO_INVALIDO = "El Salario minimo de ese año no fue encontrado.";
+    private static final String ANNO_SALARIO_MINIMO_INVALIDO = "El Salario mínimo de ese año no fue encontrado.";
 
     @Test
-    @DisplayName("Deberia devolver un salario minimo año valido")
+    @DisplayName("Debería devolver un salario mínimo año valido")
     void deberiaDevolverUnPaqueteDeContratoValido() {
         // arrange
         Integer annoSalarioMinimo = 2022;
@@ -21,7 +21,7 @@ class SalariosMinimosAnnosTest {
     }
 
     @Test
-    @DisplayName("Deberia lanzar excepcion por salario minimo año no valido")
+    @DisplayName("Debería lanzar excepción por salario mínimo año no valido")
     void deberiaLanzarExcepcionPorPaqueteNoValido() {
         // arrange
         Integer annoSalarioMinimoAnno = 1800;

@@ -1,19 +1,18 @@
 package com.ceiba.cliente.builders;
 
-
 import com.ceiba.cliente.modelo.entidad.Cliente;
 
 public class ClienteTestDataBuilder {
 
     private Long id;
-    private String nitCliente;
+    private String nit;
     private String razonSocial;
     private String nombreRepresentante;
     private String telefono;
     private String direccion;
 
     public ClienteTestDataBuilder() {
-        nitCliente = "0000001";
+        nit = "0000001";
         razonSocial = "Empresa Prueba S.A.S.";
         nombreRepresentante = "Usuario Prueba";
         telefono = "1234567890";
@@ -26,7 +25,7 @@ public class ClienteTestDataBuilder {
     }
 
     public ClienteTestDataBuilder conNit(String nit) {
-        this.nitCliente = nit;
+        this.nit = nit;
         return this;
     }
 
@@ -51,6 +50,6 @@ public class ClienteTestDataBuilder {
     }
 
     public Cliente build() {
-        return new Cliente(id, nitCliente, razonSocial, nombreRepresentante, telefono, direccion);
+        return new Cliente(id,nit,razonSocial,nombreRepresentante,telefono,direccion);
     }
 }

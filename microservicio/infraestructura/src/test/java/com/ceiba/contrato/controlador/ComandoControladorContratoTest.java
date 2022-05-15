@@ -72,7 +72,7 @@ class ComandoControladorContratoTest {
     void eliminar() throws Exception {
         // arrange
         // act - assert
-        mocMvc.perform(delete("/contratos/1")
+        mocMvc.perform(delete("/contratos/4")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

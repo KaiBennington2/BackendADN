@@ -11,10 +11,10 @@ public class MapeoCliente implements RowMapper<DtoCliente>, MapperResult {
 
     private static final String ID = "id";
     private static final String NIT = "nit";
-    private static final String COMPANY = "razon_social";
-    private static final String REPRESENTANT = "nombre_representante";
-    private static final String PHONE = "telefono";
-    private static final String ADRESS = "direccion";
+    private static final String RAZON_SOCIAL = "razon_social";
+    private static final String NOMBRE_REPRESENTANTE = "nombre_representante";
+    private static final String TELEFONO = "telefono";
+    private static final String DIRECCION = "direccion";
 
     @Override
     public DtoCliente mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -22,10 +22,10 @@ public class MapeoCliente implements RowMapper<DtoCliente>, MapperResult {
         return new DtoCliente(
                 rs.getLong(ID),
                 rs.getString(NIT),
-                rs.getString(COMPANY),
-                rs.getString(REPRESENTANT),
-                rs.getString(PHONE),
-                rs.getString(ADRESS)
+                rs.getString(RAZON_SOCIAL),
+                rs.getString(NOMBRE_REPRESENTANTE),
+                rs.getString(TELEFONO),
+                rs.getString(DIRECCION)
         );
     }
 }

@@ -15,11 +15,14 @@ import java.util.List;
 @Component
 public class DaoClienteMysqlCliente implements DaoCliente {
 
-    private static final String ERROR_AL_ENCONTRAR = "Cliente no encontrado.";
+    private static final String CLIENTE_NO_ENCONTRADO = "El cliente no encontrado.";
 
     private static final String SQL_NAMESPACE = "cliente";
     private static final String ID = "id";
     private static final String NIT = "nit";
+
+    @SqlStatement(namespace = SQL_NAMESPACE, value = "existsById")
+    private static String sqlExistsById;
 
     @SqlStatement(namespace = SQL_NAMESPACE, value = "existsByNit")
     private static String sqlExistsByNit;
@@ -40,6 +43,13 @@ public class DaoClienteMysqlCliente implements DaoCliente {
     }
 
     @Override
+    public Boolean existsById(Long id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(ID, id);
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistsById, params, Boolean.class);
+    }
+
+    @Override
     public Boolean existsByNit(String nit) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(NIT, nit);
@@ -54,9 +64,13 @@ public class DaoClienteMysqlCliente implements DaoCliente {
 
     @Override
     public DtoCliente findById(Long id) {
+        try {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(ID, id);
         return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindById, params, new MapeoCliente());
+        } catch (DataAccessException e) {
+            throw new ExcepcionTecnica(CLIENTE_NO_ENCONTRADO, e);
+        }
     }
 
     @Override
@@ -66,7 +80,7 @@ public class DaoClienteMysqlCliente implements DaoCliente {
             params.addValue(NIT, nit);
             return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlFindByNit, params, new MapeoCliente());
         }catch (DataAccessException e){
-            throw new ExcepcionTecnica(ERROR_AL_ENCONTRAR, e);
+            throw new ExcepcionTecnica(CLIENTE_NO_ENCONTRADO, e);
         }
     }
 
